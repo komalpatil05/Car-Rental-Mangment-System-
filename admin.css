@@ -1,0 +1,51 @@
+:root{
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0b69ff;
+  --dark:#243548;
+}
+
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color:#17233a;
+  margin:0;
+  padding:28px;
+}
+
+.admin-header{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 6px;margin-bottom:18px;
+}
+.admin-header h1{font-size:22px;margin:0;color:var(--dark)}
+.btn-logout{background:#ef4444;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600}
+
+.metrics-row{display:flex;gap:16px}
+.metric{background:var(--card);border:1px solid #e6eef8;padding: 20px;border-radius:20px;display:flex;align-items:center;gap:12px;min-width:600px;box-shadow:0 6px 18px rgba(36,53,72,0.04)}
+.metric-icon{background:#f4f7fb;border-radius:8px;padding:10px;color:var(--accent);font-size:18px}
+.metric-title{font-size:15px;color:var(--muted)}
+.metric-value{font-size:24px;font-weight:700}
+
+.card{background:var(--card);border-radius:10px;padding:0;border:1px solid #e6eef8}
+.table-card{padding:10px}
+.card-header{padding:14px 8px;border-bottom:1px solid #eef6ff}
+
+
+.table-wrap{overflow-x:auto}
+.admin-table{width:100%;border-collapse:separate;border-spacing:0;margin:0;font-size:14px;min-width:860px}
+.admin-table thead th{background:#243548;color:#fff;padding:12px 14px;text-align:left;font-weight:700}
+.admin-table tbody td{background:#fff;padding:12px 14px;border-bottom:1px solid #eef6ff}
+.admin-table tbody tr:nth-child(even) td{background:#fbfdff}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;color:#334155}
+
+.badge{display:inline-block;padding:6px 10px;border-radius:8px;color:#fff;font-weight:700;font-size:12px;text-transform:capitalize}
+.badge.paid{background:#16a34a}
+.badge.pending{background:#f97316}
+.badge.primary{background:#2563eb}
+
+.muted{color:var(--muted);padding:12px 0}
+
+@media (max-width:900px){
+  .metrics-row{flex-direction:column}
+  .admin-table{min-width:600px}
+}

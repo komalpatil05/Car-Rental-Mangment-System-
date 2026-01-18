@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+	<div class="layout">
+		<aside class="sidebar">
+			<div class="brand">
+				<h2>UrbanDrive</h2>
+			</div>
+			<ul class="side-menu">
+				<li class="active"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+				<li><a href="{{ url_for('profile') }}">Profile</a></li>
+				<li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
+			</ul>
+		</aside>
+
+		<main class="dashboard-main">
+			<div class="dash-top">
+				<h1>Welcome, {{ name or 'User' }} 👋</h1>
+			</div>
+
+			<div class="metrics">
+				<div class="metric-card">
+					<div class="metric-label">Total Bookings</div>
+					<div class="metric-value">{{ total_bookings }}</div>
+				</div>
+				<div class="metric-card">
+					<div class="metric-label">Active Booking</div>
+					<div class="metric-value">{{ active_bookings }}</div>
+				</div>
+				<div class="metric-card">
+					<div class="metric-label">Total Paid</div>
+					<div class="metric-value">₹{{ total_paid }}</div>
+				</div>
+			</div>
+
+			<section class="card current-booking">
+				<h2>Current Booking</h2>
+				{% if current_booking %}
+				<p><strong>Car:</strong> {{ current_booking.car_type }}</p>
+				<p><strong>Pickup:</strong> {{ current_booking.pickup_date }}</p>
+				<p><strong>Return:</strong> {{ current_booking.dropoff_date }}</p>
+				<p><strong>Status:</strong> {{ current_booking.booking_status }}</p>
+				{% else %}
+				<p class="empty-state">No active booking. <a href="/booking">Create a booking</a>.</p>
+				{% endif %}
+			</section>
+
+			<section class="card">
+				<h2>Recent Bookings</h2>
+				{% if bookings %}
+				<table class="bookings-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Car</th>
+							<th>Pickup</th>
+							<th>Dropoff</th>
+							<th>Dates</th>
+							<th>Amount</th>
+							<th>Payment</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for b in bookings %}
+						<tr>
+							<td>{{ b.id }}</td>
+							<td>{{ b.car_type }}</td>
+							<td>{{ b.pickup_location }}</td>
+							<td>{{ b.dropoff_location }}</td>
+							<td>{{ b.pickup_date }} → {{ b.dropoff_date }}</td>
+							<td>₹{{ b.amount }}</td>
+							<td>{{ b.payment_status }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				<p>No bookings yet. <a href="/booking">Create your first booking</a>.</p>
+				{% endif %}
+			</section>
+		</main>
+	</div>
+</body>
+</html>

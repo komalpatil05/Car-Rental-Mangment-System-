@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment - UrbanDrive</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+</head>
+
+<body>
+
+<section class="payment payment--summary-centered">
+  <div class="payment-heading heading" style="text-align:center;margin-bottom:30px;">
+    <span>SECURE PAYMENT</span>
+    <h1>Complete Your Booking</h1>
+  </div>
+
+  <div class="payment-container">
+
+    <!-- Booking Summary -->
+    <div class="booking-summary">
+      <h2>Booking Summary</h2>
+      <p class="booking-id">Booking ID: <strong>{{ booking.id }}</strong></p>
+
+      <div class="summary-item">
+        <span>Car</span>
+        <span>{{ booking.car_type }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Pickup</span>
+        <span>{{ booking.pickup_location }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Dropoff</span>
+        <span>{{ booking.dropoff_location }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Pickup Date</span>
+        <span>{{ booking.pickup_date }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Dropoff Date</span>
+        <span>{{ booking.dropoff_date }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Days</span>
+        <span>{{ days }}</span>
+      </div>
+      <div class="summary-item">
+        <span>Number of Cars</span>
+        <span>{{ car_quantity }}</span>
+      </div>
+
+      <div class="summary-item">
+        <span>Rate / Day</span>
+        <span>₹{{ rate }}</span>
+      </div>
+      <div class="summary-item total">
+        <span>Total Amount</span>
+        <span>₹{{ booking.amount }}</span>
+      </div>
+
+      <!-- Small pay button inside booking summary -->
+      <div style="margin-top:18px;text-align:center;">
+        <button class="pay-small" id="pay-btn">Pay ₹{{ booking.amount }}</button>
+      </div>
+
+    <!-- Payment Column -->
+    </div>
+
+    <!-- removed separate payment column; booking summary centered -->
+  </div>
+
+  <!-- Dashboard link placed below the booking summary block -->
+  
+</section>
+
+<script>
+async function startPayment() {
+  const response = await fetch("/create-cashfree-order/{{ booking.id }}", {
+    method: "POST"
+  });
+
+  const data = await response.json();
+
+  if (!data || !data.payment_session_id) {
+    const msg = (data && (data.error || data.message)) ? (data.error || data.message) : JSON.stringify(data);
+    alert("Unable to create payment session: " + msg);
+    return;
+  }
+
+  const cashfree = Cashfree({
+    mode: "sandbox"
+  });
+
+  cashfree.checkout({
+    paymentSessionId: data.payment_session_id,
+    redirectTarget: "_self"
+  });
+}
+
+document.getElementById("pay-btn").onclick = function(e){
+  e.preventDefault();
+  startPayment();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+
+<!doctype html>
+<html lang="en">
+ 	<head>
+ 		<meta charset="utf-8">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
+ 		<title>Admin Dashboard</title>
+ 		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+ 		<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 	</head>
+ 	<body>
+ 		<header class="admin-header">
+ 			<div class="header-left">
+ 				<h1>Admin Dashboard</h1>
+ 			</div>
+ 			<div class="header-right">
+ 				<a href="/admin/logout" class="btn-logout">Logout</a>
+ 			</div>
+ 		</header>
+
+ 		<section class="metrics-row">
+ 			<div class="metric">
+ 				<div class="metric-icon"><i class="fa-solid fa-user"></i></div>
+ 				<div class="metric-body">
+ 					<div class="metric-title">Users</div>
+ 					<div class="metric-value">{{ users_count }}</div>
+ 				</div>
+ 			</div>
+
+ 			<div class="metric">
+ 				<div class="metric-icon"><i class="fa-solid fa-calendar-days"></i></div>
+ 				<div class="metric-body">
+ 					<div class="metric-title">Bookings</div>
+ 					<div class="metric-value">{{ bookings_count }}</div>
+ 				</div>
+ 			</div>
+ 		</section>
+
+ 		<section class="card table-card">
+ 			<div class="card-header">
+ 				<strong>Recent Bookings</strong>
+ 			</div>
+ 			<div class="table-wrap">
+ 			{% if recent_bookings %}
+ 			<table class="admin-table">
+ 				<thead>
+ 					<tr>
+ 						<th>ID</th>
+ 						<th>User</th>
+						<th>Email</th>
+ 						<th>Phone</th>
+ 						<th>Car</th>
+ 						<th>Amount</th>
+ 						<th>Payment</th>
+ 						<th>Status</th>
+ 					</tr>
+ 				</thead>
+ 				<tbody>
+ 				{% for b in recent_bookings %}
+ 					<tr>
+ 						<td>{{ b.id }}</td>
+						<td class="mono">{{ b.username or b.user_id }}</td>
+						<td class="mono-email">{{ b.email or '-' }}</td>
+						<td>{{ b.phone or '-' }}</td>
+ 						<td>{{ b.car_type }}</td>
+ 						<td>₹{{ b.amount }}</td>
+ 						<td><span class="badge {{ 'paid' if b.payment_status=='paid' else 'pending' }}">{{ b.payment_status|capitalize }}</span></td>
+ 						<td><span class="badge primary">{{ b.booking_status|capitalize }}</span></td>
+ 					</tr>
+ 				{% endfor %}
+ 				</tbody>
+ 			</table>
+ 			{% else %}
+ 				<div class="muted">No bookings yet.</div>
+ 			{% endif %}
+ 			</div>
+ 		</section>
+
+ 	</body>
+</html>

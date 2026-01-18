@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="success-page">
+  <div class="success-card">
+    <div class="success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      </svg>
+    </div>
+
+    <h1 class="title">Payment Successful!</h1>
+    <p class="message">Thank you for your payment. Your transaction has been completed successfully.</p>
+
+    <div class="details">
+      <div class="detail-row">
+        <span class="label">Booking ID</span>
+        <span class="value">{{ booking_id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Amount Paid</span>
+        <span class="value">{{ amount }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Transaction ID</span>
+        <span class="value">{{ transaction_id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Date</span>
+        <span class="value">{{ date }}</span>
+      </div>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="button">Back to Dashboard</a>
+  </div>
+
+  <h2>Payment Successful 🎉</h2>
+  <p>Redirecting to dashboard...</p>
+
+  <!-- centered Back to Dashboard button placed at the bottom -->
+  <div style="text-align:center; margin-top:36px;">
+    <a href="{{ url_for('dashboard') }}" style="display:inline-block; padding:12px 26px; background:#f7f7f7; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.08); color:#111; text-decoration:none; font-weight:600;">
+      Back to Dashboard <span style="margin-left:12px;">→</span>
+    </a>
+  </div>
+
+  <script>
+    // short delay to let user read the message, then redirect
+    setTimeout(() => {
+      window.location.href = "/dashboard";
+    }, 3000);
+  </script>
+</body>
+</html>

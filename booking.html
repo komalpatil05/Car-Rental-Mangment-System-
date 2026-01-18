@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Car - UrbanDrive</title>
+  <!--link to css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+</head>
+<body>
+<!--header section starts-
+<header><a href="index.html" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UrbanDrive">
+        <span class="logo-text">UrbanDrive</span>
+    </a>
+  
+  <div class="bx bx-menu" id="menu-icon"></div>
+
+
+  <ul class="navbar">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#ride">Ride</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+    </ul>
+        <div class="header-btn">
+                <div class="login-dropdown">
+                    <img src="{{ url_for('static', filename='images/login.png') }}"  alt="login" class="login">
+                    <i class="bx bx-chevron-down" id="dropdown-arrow"></i>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+</header>
+<!-Booking Section -->
+<section class="booking" id="booking">
+    <div class="heading">
+        <span>Book Your Ride</span>
+        <h1>Reserve Your Perfect Car</h1>
+    </div>
+    <div class="booking-container">
+        <form class="booking-form" action="{{ url_for('booking') }}" method="post">
+            <div class="form-group">
+                <label for="pickup_location">Pickup Location</label>
+                <input type="text" id="pickup_location" name="pickup_location" placeholder="Enter pickup location" required>
+            </div>
+            <div class="form-group">
+                <label for="dropoff_location">Dropoff Location</label>
+                <input type="text" id="dropoff_location" name="dropoff_location" placeholder="Enter dropoff location" required>
+            </div>
+            <div class="form-group">
+                <label for="pickup_date">Pickup Date</label>
+                <input type="date" id="pickup_date" name="pickup_date" required>
+            </div>
+            <div class="form-group">
+                <label for="dropoff_date">Dropoff Date</label>
+                <input type="date" id="dropoff_date" name="dropoff_date" required>
+            </div>
+            <div class="form-group">
+                <label for="car-type">Select Car</label>
+                <select id="car-type" name="car_type" required>
+                    <option value="">Choose a car</option>
+                    <option value="Maruti">Maruti Suzuki Alto</option>
+                    <option value="Swift">Maruti Swift </option>
+                    <option value="Nexon">Tata Nexon</option>
+                    <option value="Creta">Hyundai Creta</option>
+                    <option value="City">Honda City</option>
+                    <option value="Scorpio">Mahindra Scorpio</option>
+                </select>
+            </div>
+             <div class="form-group">
+                <label for="car_quantity">Number of Cars</label>
+                <input type="number" id="car_quantity" name="car_quantity" min="1"  max="10" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="booking_date">Booking Date</label>
+                <input type="date" id="booking_date" name="booking_date" required>
+            </div>
+            <button type="submit" class="btn">Book Now</button>
+        </form>
+    </div>
+</section>
+
+<!--NwsLetter-
+<section class="newsletter">
+    <h2>Subscribe To Newsletter</h2>
+    <div class="box">
+        <input type="text" placeholder="Enter Your email">
+        <a href="#" class="btn">Subscribe</a>
+    </div>
+</section>
+<div class="copyright">
+    <p>&copy; All Rights Reserved</p>
+    <div class="social">
+        <a href="#"><i class='bx bxl-facebook' ></i></a>
+        <a href="#"><i class='bx bxl-twitter' ></i></a>
+        <a href="#"><i class='bx bxl-instagram' ></i></a>
+    </div>
+</div>-->
+  
+   
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+document.querySelector('.booking-form').addEventListener('submit', function(e) {
+    const formData = new FormData(this);
+    const bookingData = {};
+    for (let [key, value] of formData.entries()) {
+        bookingData[key] = value;
+    }
+    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+});
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById("booking_date").value = today;
+  document.getElementById("booking_date").min = today;
+</script>
+</body>
+</html>
