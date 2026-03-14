@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Car - UrbanDrive</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UrbanDrive">
+        <span class="logo-text">UrbanDrive</span>
+    </a>
+
+    <ul class="navbar">
+        <li><a href="/">Home</a></li>
+        <li><a href="/booking">Booking</a></li>
+        <li><a href="/recommend" class="active">Recommend</a></li>
+    </ul>
+
+    <div class="header-btn">
+        {% if session.get('logged_in') %}
+            <a href="/dashboard" class="sign-in">Dashboard</a>
+        {% else %}
+            <a href="/login" class="sign-in">Sign In</a>
+        {% endif %}
+    </div>
+</header>
+
+<section class="booking recommend-page" id="recommend">
+    <div class="heading">
+        <span>Car Recommendation</span>
+        <h1>Find Your Perfect Car 🚗</h1>
+    </div>
+
+    {% if error %}
+    <div class="recommend-error">{{ error }}</div>
+    {% endif %}
+
+    <div class="booking-container">
+        <form class="booking-form recommend-form" method="POST">
+            <div class="recommend-form-grid">
+                <div class="form-group">
+                    <label for="budget">Number of days required for the car</label>
+                    <input type="number" id="budget" name="budget" placeholder="Enter Number of Days" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="family_size">Family Size</label>
+                    <input type="number" id="family_size" name="family_size" placeholder="Family Size" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fuel">Fuel Type</label>
+                    <select id="fuel" name="fuel" required>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Diesel">Diesel</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="trip">Trip Type</label>
+                    <select id="trip" name="trip" required>
+                        <option value="Business">Business</option>
+                        <option value="Vacation">Vacation</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="recommend-actions">
+                <button type="submit" class="btn">Predict Car</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% if cars %}
+<section class="services recommend-results" id="results">
+    <div class="heading">
+        <span>Best Match For You</span>
+        <h1>Recommended Cars</h1>
+    </div>
+
+    <div class="services-container">
+        {% for car in cars %}
+        <div class="box recommend-card">
+            <div class="box-img">
+                {% set image_name = car.get('image', 'jeep.png') %}
+                <img src="{{ url_for('static', filename='images/' + image_name) }}" alt="{{ car.name }}">
+            </div>
+
+            <h3>{{ car.name }}</h3>
+            <h2>₹{{ car.price_per_day }} <span>/per Day</span></h2>
+            <p>{{ car.fuel_type }} | {{ car.seats }} Seater</p>
+            <a href="{{ url_for('booking') }}" class="btn">Rent now</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
